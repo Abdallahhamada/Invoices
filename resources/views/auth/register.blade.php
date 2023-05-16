@@ -1,0 +1,93 @@
+@extends('layouts.master2')
+@section('title')
+{{ __('register.register') }}
+@endsection
+@section('css')
+<!-- Sidemenu-respoansive-tabs css -->
+<link href="{{URL::asset('assets/plugins/sidemenu-responsive-tabs/css/sidemenu-responsive-tabs.css')}}" rel="stylesheet">
+@endsection
+@section('content')
+		<div class="container-fluid">
+			<div class="row no-gutter">
+				<!-- The image half -->
+				<div class="col-md-6 col-lg-6 col-xl-7 d-none d-md-flex bg-primary-transparent">
+					<div class="row wd-100p mx-auto text-center">
+						<div class="col-md-12 col-lg-12 col-xl-12 my-auto mx-auto wd-100p">
+							<img src="{{URL::asset('assets/img/media/login.jpg')}}" class="my-auto ht-xl-80p wd-md-100p wd-xl-80p mx-auto" alt="logo">
+						</div>
+					</div>
+				</div>
+				<!-- The content half -->
+				<div class="col-md-6 col-lg-6 col-xl-5 bg-white">
+					<div class="login d-flex align-items-center py-2">
+						<!-- Demo content-->
+						<div class="container p-0">
+							<div class="row">
+								<div class="col-md-10 col-lg-10 col-xl-9 mx-auto">
+									<div class="card-sigin">
+										<div class="mb-5 d-flex"> <a href="{{ url('/' . $page='index') }}"><img src="{{URL::asset('assets/img/brand/favicon.png')}}" class="sign-favicon ht-40" alt="logo"></a><h1 class="main-logo1 ml-1 mr-0 my-auto tx-28">Invo<span>ice</span></h1></div>
+										<div class="main-signup-header">
+											<form method="POST" action="{{ route('register') }}">
+                                                @csrf
+												<div class="form-group">
+													<label>{{ __('register.name') }}</label>
+                                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('register.enter your name') }}" required autocomplete="name" autofocus>
+                                                    @error('name')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+												</div>
+												<div class="form-group">
+													<label>{{ __('register.email') }}</label>
+                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('register.enter your email') }}" required autocomplete="email">
+
+                                                    @error('email')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+												</div>
+												<div class="form-group">
+													<label>{{ __('register.password') }}</label>
+                                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('register.enter your password') }}" required autocomplete="new-password">
+
+                                                    @error('password')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+												</div>
+												<div class="form-group">
+													<label>{{ __('register.confirm password') }}</label>
+                                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('register.confirm password') }}" required autocomplete="new-password">
+												</div>
+                                                <button type="submit" class="btn btn-main-primary btn-block">
+                                                    {{ __('register.create account') }}
+                                                </button>
+                                                <div class="dropdown  nav-itemd-none d-md-flex">
+                                                    <a href="#" class="d-flex  nav-item nav-link pl-0 country-flag1" data-toggle="dropdown" aria-expanded="false">
+                                                        <span class="mr-0 align-self-center">{{ LaravelLocalization::getCurrentLocaleNative() }}</span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" x-placement="bottom-end">
+                                                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                                    <a class="dropdown-item d-flex" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                                        {{ $properties['native'] }}
+                                                                    </a>
+                                                            @endforeach
+                                                    </div>
+                                                </div>
+
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- End -->
+					</div>
+				</div><!-- End -->
+			</div>
+		</div>
+@endsection
+@section('js')
+@endsection
