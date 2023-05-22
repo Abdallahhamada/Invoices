@@ -25,11 +25,8 @@ use Spatie\Permission\Models\Role;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
 });
-// Route::get('/', function () {
-//     return redirect('/index');
-// });
 
 Route::group(['prefix' => LaravelLocalization::setLocale(),
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function(){
@@ -38,7 +35,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
         Auth::routes(['register'=>false]);
 
         Route::group(['middleware'=> 'auth:web'],function (){
-
             Route::resource('/invoices', InvoiceController::class);
             Route::resource('/users', UserController::class)->except(['create','show']);
             Route::resource('/permissions', PermessionController::class)->except(['create']);
@@ -48,14 +44,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::get('/print/{id}', [InvoiceStatusController::class,'printInvoice'])->name('print.invoice');
             Route::resource('/sections', SectionController::class)->except(['create']);
             Route::resource('/products', ProductController::class)->except(['create','show']);
-            Route::resource('/invoice-attachment', InvoicesAttachmentsController::class);
+            Route::resource('/invoice-attachment', InvoicesAttachmentsController::class)->only('destroy');
             Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-
-            Route::get('/{page}', function ($page) {
-                return view($page);
-            });
+            Route::pattern('id', '[0-9]+');
         });
 
 

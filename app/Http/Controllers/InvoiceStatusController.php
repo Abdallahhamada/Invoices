@@ -13,8 +13,11 @@ class InvoiceStatusController extends Controller
      */
     public function paiedInvoices()
     {
-        $info=Invoice::where('status','1')->get();
-        return view('invoices.paied-invoices',['data'=>$info]);
+        if (auth()->user()->hasPermissionTo('show invoices')){
+            $info=Invoice::where('status','1')->get();
+            return view('invoices.paied-invoices',['data'=>$info]);
+        }
+        return abort(404);
     }
 
     /**
@@ -22,16 +25,22 @@ class InvoiceStatusController extends Controller
      */
     public function partialyPaiedInvoices()
     {
-        $info=Invoice::where('status','2')->get();
-        return view('invoices.partialy-invoices',['data'=>$info]);
+        if (auth()->user()->hasPermissionTo('show invoices')){
+            $info=Invoice::where('status','2')->get();
+            return view('invoices.partialy-invoices',['data'=>$info]);
+        }
+        return abort(404);
     }
     /**
      * get unpaied invoices from database.
      */
     public function unpaiedInvoices()
     {
-        $info=Invoice::where('status','3')->get();
-        return view('invoices.unpaied-invoices',['data'=>$info]);
+        if (auth()->user()->hasPermissionTo('show invoices')){
+            $info=Invoice::where('status','3')->get();
+            return view('invoices.unpaied-invoices',['data'=>$info]);
+        }
+        return abort(404);
     }
 
     /**
@@ -39,7 +48,10 @@ class InvoiceStatusController extends Controller
      */
     public function printInvoice($id)
     {
-        $invoices=Invoice::find($id);
-        return view('invoices.print-invoice',compact('invoices'));
+        if (auth()->user()->hasPermissionTo('show invoices')){
+            $invoices=Invoice::find($id);
+            return view('invoices.print-invoice',compact('invoices'));
+        }
+        return abort(404);
     }
 }

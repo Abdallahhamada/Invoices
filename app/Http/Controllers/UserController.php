@@ -67,7 +67,7 @@ class UserController extends Controller
     public function edit($id)
     {
         if (auth()->user()->hasPermissionTo('edit users')){
-            $data=User::find($id);
+            $data=User::findOrFail($id);
             return view('users.edit-users',compact('data'));
         }
         return abort(404);
@@ -86,7 +86,7 @@ class UserController extends Controller
                     unset($data['password']);
                 }
                 unset($data['password_confirmation']);
-                $user=User::find($id)->update($data);
+                $user=User::findOrFail($id)->update($data);
             }
             $this->messages($user);
             return redirect()->back();

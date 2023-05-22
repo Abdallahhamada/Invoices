@@ -30,17 +30,15 @@
 						<div class="card">
 							<div class="card-header pb-0">
                                 @can('add invoices')
-                                    <div class="row row-xs wd-xl-80p">
-                                        <div class="col-sm-6 col-md-3 mg-t-10 mg-sm-t-0">
-                                            <a class="btn btn-outline-success btn-block" href="{{route('invoices.create')}}"><i class="fa-solid fa-plus"></i>  {{ __('invoices.add invoice') }}</a>
-                                        </div>
+                                    <div class="col-sm-6 col-md-3 mg-t-10 mg-sm-t-0">
+                                        <a class="btn btn-outline-success btn-block" href="{{route('invoices.create')}}"><i class="fa-solid fa-plus"></i>  {{ __('invoices.add invoice') }}</a>
                                     </div>
                                 @endcan
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
+                                    <div style="visibility: hidden">'</div>
 									<table class="table text-md-nowrap" id="example1">
-                                        <div style="visibility: hidden">'</div>
 										<thead>
 											<tr>
 												<th class="wd-5p border-bottom-0">#</th>
@@ -71,7 +69,15 @@
                                                     <td>{{$info->rate_vat}}</td>
                                                     <td>{{$info->value_vat}}</td>
                                                     <td>{{$info->total}}</td>
-                                                    <td>{{$info->status}}</td>
+                                                        @if( $info->status== __('invoices.paied'))
+                                                        <td class="text-success">{{$info->status}}</td>
+                                                        @endif
+                                                        @if( $info->status== __('invoices.partialy paied'))
+                                                        <td class="text-primary">{{$info->status}}</td>
+                                                        @endif
+                                                        @if( $info->status== __('invoices.unpaied'))
+                                                            <td class="text-danger">{{$info->status}}</td>
+                                                        @endif
                                                     <td>{{$info->note}}</td>
                                                     <td>
                                                         <div class="btn-group dropup">
@@ -144,5 +150,10 @@
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 <!--Internal  Datatable js -->
-<script src="{{URL::asset('assets/js/table-data.js')}}"></script>
+<script src="{{URL::asset('assets/js/table-data.js')}}"></script><!--Internal  Datepicker js -->
+<script src="{{URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js')}}"></script>
+<!-- Internal Select2 js-->
+<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+<!-- Internal Modal js-->
+<script src="{{URL::asset('assets/js/modal.js')}}"></script>
 @endsection

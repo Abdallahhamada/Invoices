@@ -15,8 +15,11 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $data=Section::all();
-        return view('sections.sections',compact('data'));
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=Section::all();
+            return view('sections.sections',compact('data'));
+        }
+        return abort(404);
     }
 
     /**
@@ -32,10 +35,13 @@ class SectionController extends Controller
      */
     public function store(SectionRequest $request)
     {
-        $data=$request->validated();
-        $value=Section::create($data);
-        $this->messages($value);
-        return redirect()->back();
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=$request->validated();
+            $value=Section::create($data);
+            $this->messages($value);
+            return redirect()->back();
+        }
+        return abort(404);
     }
 
     /**
@@ -43,8 +49,11 @@ class SectionController extends Controller
      */
     public function show($id)
     {
-        $data=Section::with('product')->find($id);
-        return $data->product;
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=Section::with('product')->findOrFail($id);
+            return $data->product;
+        }
+        return abort(404);
 
     }
 
@@ -53,8 +62,11 @@ class SectionController extends Controller
      */
     public function edit($id)
     {
-        $data=Section::findOrFail($id);
-        return view('sections.edit-sections',compact('data'));
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=Section::findOrFail($id);
+            return view('sections.edit-sections',compact('data'));
+        }
+        return abort(404);
     }
 
     /**
@@ -62,10 +74,13 @@ class SectionController extends Controller
      */
     public function update(SectionRequest $request, $id)
     {
-        $data=$request->validated();
-        $value=Section::findOrFail($id)->update($data);
-        $this->messages($value);
-        return redirect()->back();
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=$request->validated();
+            $value=Section::findOrFail($id)->update($data);
+            $this->messages($value);
+            return redirect()->back();
+        }
+        return abort(404);
     }
 
     /**
@@ -73,9 +88,12 @@ class SectionController extends Controller
      */
     public function destroy($id)
     {
-        $data=Section::findOrFail($id)->delete();
-        $this->messages($data);
-        return redirect()->back();
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=Section::findOrFail($id)->delete();
+            $this->messages($data);
+            return redirect()->back();
+        }
+        return abort(404);
 
     }
 }

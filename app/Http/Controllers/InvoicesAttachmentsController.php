@@ -60,9 +60,12 @@ class InvoicesAttachmentsController extends Controller
      */
     public function destroy($invoice_number)
     {
-        $invoice=InvoicesAttachments::where('invoice_number',$invoice_number)->delete();
-        $name='store/'.$invoice->file_name;
-        unset($name);
-        return redirect()->back();
+        if (auth()->user()->hasPermissionTo('delete invoices')){
+            $invoice=InvoicesAttachments::where('invoice_number',$invoice_number)->delete();
+            $name='store/invoices/'.$invoice->file_name;
+            unset($name);
+            return redirect()->back();
+        }
+        return abort(404);
     }
 }

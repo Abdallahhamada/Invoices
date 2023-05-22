@@ -46,9 +46,8 @@
 							<div class="card-body">
                                 <div class="col-xl-12">
                                         <div class="row  d-flex align-items-center " style="height:100px">
-                                            <img src="{{asset($user->photo)}}" style="height:100%;" alt="user photo" title="{{__('users.press to show photo')}}"/>
-                                            <div class="details col-8" style="box-sizing: border-box">
-                                                <p>ID : <span>{{$user->id}}</span></p>
+                                            <img src="{{asset($user->photo)}}" style="height:100%;" class="col-2" alt="user photo" title="{{__('users.press to show photo')}}"/>
+                                            <div class="details col-10" style="box-sizing: border-box">
                                                 <p>{{__('users.name')}} : <span>{{$user->name}}</span></p>
                                                 <p>{{__('users.email')}} : <span>{{$user->email}}</span></p>
                                             </div>
@@ -63,10 +62,8 @@
                                             <thead>
                                                 <tr>
                                                     <th class="wd-5p border-bottom-0">{{__('users.select')}}</th>
-                                                    <th class="wd-5p border-bottom-0">#</th>
                                                     <th class="wd-15p border-bottom-0">{{ __('users.permission name') }}</th>
                                                     <th class="wd-5p border-bottom-0">{{__('users.select')}}</th>
-                                                    <th class="wd-5p border-bottom-0">#</th>
                                                     <th class="wd-15p border-bottom-0">{{ __('users.permission name') }}</th>
                                                 </tr>
                                             </thead>
@@ -78,7 +75,6 @@
                                                         <td>
                                                             <input type="checkbox" name="name[]" value="{{$info->name}}"/>
                                                         </td>
-                                                        <td>{{$info->id}}</td>
                                                         <td>{{$info->name}}</td>
                                                     @if ($index%2!=0)
                                                         </tr>

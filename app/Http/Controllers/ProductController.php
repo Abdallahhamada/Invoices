@@ -17,9 +17,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data=Product::with('section')->get();
-        $sections=Section::get();
-        return view('products.products',compact('data','sections'));
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=Product::with('section')->get();
+            $sections=Section::get();
+            return view('products.products',compact('data','sections'));
+        }
+        return abort(404);
     }
 
     /**
@@ -35,10 +38,13 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $data=$request->validated();
-        $value=Product::create($data);
-        $this->messages($value);
-        return redirect()->back();
+        if (auth()->user()->hasPermissionTo('add products')){
+            $data=$request->validated();
+            $value=Product::create($data);
+            $this->messages($value);
+            return redirect()->back();
+        }
+        return abort(404);
     }
 
     /**
@@ -54,9 +60,12 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $data=Product::findOrFail($id);
-        $sections=Section::whereHas('product')->get();
-        return view('products.edit-products',compact('data','sections'));
+        if (auth()->user()->hasPermissionTo('edit products')){
+            $data=Product::findOrFail($id);
+            $sections=Section::whereHas('product')->get();
+            return view('products.edit-products',compact('data','sections'));
+        }
+        return abort(404);
     }
 
     /**
@@ -64,10 +73,13 @@ class ProductController extends Controller
      */
     public function update(ProductEditRequest $request,$id)
     {
-        $data=$request->validated();
-        $value=Product::findOrFail($id)->update($data);
-        $this->messages($value);
-        return redirect()->back();
+        if (auth()->user()->hasPermissionTo('edit products')){
+            $data=$request->validated();
+            $value=Product::findOrFail($id)->update($data);
+            $this->messages($value);
+            return redirect()->back();
+        }
+        return abort(404);
     }
 
     /**
@@ -75,8 +87,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $data=Product::findOrFail($id)->delete();
-        $this->messages($data);
-        return redirect()->back();
+        if (auth()->user()->hasPermissionTo('show products')){
+            $data=Product::findOrFail($id)->delete();
+            $this->messages($data);
+            return redirect()->back();
+        }
+        return abort(404);
     }
 }
