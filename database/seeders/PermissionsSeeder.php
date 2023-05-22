@@ -20,7 +20,6 @@ class PermissionsSeeder extends Seeder
             'email'=>'admin@gmail.com',
             'password'=>'admin@admin',
         ]);
-        $admin=Role::create(['name'=>'admin']);
         Permission::create(['show invoices']);
         Permission::create(['edit invoices']);
         Permission::create(['delete invoices']);
@@ -35,8 +34,9 @@ class PermissionsSeeder extends Seeder
         Permission::create(['delete users']);
         Permission::create(['show permissions']);
         Permission::create(['edit permissions']);
+        Permission::create(['add permissions']);
+        Permission::create(['delete permissions']);
         $permissions=Permission::all()->toArray();
-        $admin->givePermissionTo($permissions);
-        $user->asignRole('admin');
+        $user->givePermissionTo($permissions);
     }
 }
