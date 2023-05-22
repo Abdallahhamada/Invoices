@@ -56,7 +56,7 @@ class ProductController extends Controller
     {
         $data=Product::findOrFail($id);
         $sections=Section::whereHas('product')->get();
-        return view('products.edit',compact('data','sections'));
+        return view('products.edit-products',compact('data','sections'));
     }
 
     /**

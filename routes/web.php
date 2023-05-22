@@ -3,11 +3,15 @@
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoicesAttachmentsController;
 use App\Http\Controllers\InvoiceStatusController;
+use App\Http\Controllers\PermessionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +34,14 @@ Route::get('/', function () {
 Route::group(['prefix' => LaravelLocalization::setLocale(),
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function(){
 
-        //  !(App\Models\User::count() > 0) check if users table is empty or not for one time register only
-        Auth::routes(['register'=>!(App\Models\User::count() > 0)]);
+
+        Auth::routes(['register'=>false]);
 
         Route::group(['middleware'=> 'auth:web'],function (){
 
             Route::resource('/invoices', InvoiceController::class);
+            Route::resource('/users', UserController::class)->except(['create','show']);
+            Route::resource('/permissions', PermessionController::class)->except(['create']);
             Route::get('/paied', [InvoiceStatusController::class,'paiedInvoices']);
             Route::get('/unpaied', [InvoiceStatusController::class,'unpaiedInvoices']);
             Route::get('/partialy', [InvoiceStatusController::class,'partialyPaiedInvoices']);
@@ -44,6 +50,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::resource('/products', ProductController::class)->except(['create','show']);
             Route::resource('/invoice-attachment', InvoicesAttachmentsController::class);
             Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
             Route::get('/{page}', function ($page) {
                 return view($page);
             });

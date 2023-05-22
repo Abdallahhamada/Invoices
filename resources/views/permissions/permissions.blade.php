@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-{{ __('products.products') }}
+{{ __('permissions.permissions') }}
 @endsection
 @section('css')
 <!-- Internal Data table css -->
@@ -16,21 +16,13 @@
 <link href="{{URL::asset('assets/plugins/multislider/multislider.css')}}" rel="stylesheet">
 <!--- Select2 css -->
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
-<!-- Internal Select2 css -->
-<link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
-<!--Internal  Datetimepicker-slider css -->
-<link href="{{URL::asset('assets/plugins/amazeui-datetimepicker/css/amazeui.datetimepicker.css')}}" rel="stylesheet">
-<link href="{{URL::asset('assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.css')}}" rel="stylesheet">
-<link href="{{URL::asset('assets/plugins/pickerjs/picker.min.css')}}" rel="stylesheet">
-<!-- Internal Spectrum-colorpicker css -->
-<link href="{{URL::asset('assets/plugins/spectrum-colorpicker/spectrum.css')}}" rel="stylesheet">
 @endsection
 @section('page-header')
 				<!-- breadcrumb -->
 				<div class="breadcrumb-header justify-content-between">
 					<div class="my-auto">
 						<div class="d-flex">
-							<h4 class="content-title mb-0 my-auto">{{ __('sections.settings') }}</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ {{ __('products.products') }}</span>
+							<h4 class="content-title mb-0 my-auto">{{ __('permissions.permissions') }}</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ {{ __('permissions.permissions') }}</span>
 						</div>
 					</div>
 				</div>
@@ -43,14 +35,13 @@
 					<div class="col-xl-12">
 						<div class="card">
 							<div class="card-header pb-0">
-                                @can('add product')
+                                @can('add section')
                                     <div class="row row-xs wd-xl-80p">
                                         <div class="col-sm-6 col-md-3 mg-t-10 mg-sm-t-0">
-                                            <a class="btn btn-outline-success btn-block" data-target="#modaldemo1" data-toggle="modal" href=""><i class="fa-solid fa-plus"></i>  {{ __('products.add product') }}</a>
+                                            <a class="btn btn-outline-success btn-block" data-target="#modaldemo1" data-toggle="modal" href=""><i class="fa-solid fa-plus"></i>  {{ __('permissions.add permissions') }}</a>
                                         </div>
                                     </div>
                                 @endcan
-
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -58,26 +49,24 @@
 										<thead>
 											<tr>
 												<th class="wd-5p border-bottom-0">#</th>
-												<th class="wd-15p border-bottom-0">{{ __('products.product name') }}</th>
-												<th class="wd-15p border-bottom-0">{{ __('products.section name') }}</th>
-												<th class="wd-15p border-bottom-0">{{ __('products.operations') }}</th>
+												<th class="wd-15p border-bottom-0">{{ __('permissions.name') }}</th>
+												<th class="wd-15p border-bottom-0">{{ __('permissions.operations') }}</th>
 											</tr>
 										</thead>
 										<tbody>
                                             @foreach ($data as $info)
                                                 <tr>
                                                     <td>{{$info->id}}</td>
-                                                    <td>{{$info->product_name}}</td>
-                                                    <td>{{$info->section->section_name}}</td>
+                                                    <td>{{$info->name}}</td>
                                                     <td class="d-flex justify-content-around">
-                                                        @can('edit products')
-                                                            <a href={{route('products.edit',$info->id)}} class="btn btn-outline-warning "><i class="fa-regular fa-pen-to-square"></i> {{ __('products.edit') }}</a>
+                                                        @can('edit permissions')
+                                                            <a href={{route('permissions.edit',$info->id)}} class="btn btn-outline-warning "><i class="fa-regular fa-pen-to-square"></i> {{ __('permissions.edit') }}</a>
                                                         @endcan
-                                                        @can('delete products')
-                                                            <form action={{route('products.destroy',$info->id)}} method="post">
+                                                        @can('delete permissions')
+                                                            <form action={{route('permissions.destroy',$info->id)}} method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="_method" value="delete">
-                                                                <button type="submit" class="btn btn-outline-danger "><i class="fa fa-trash"></i> {{ __('products.delete') }}</button>
+                                                                <button type="submit" class="btn btn-outline-danger "><i class="fa-regular fa-trash"></i> {{ __('permissions.delete') }}</button>
                                                             </form>
                                                         @endcan
                                                     </td>
@@ -89,35 +78,34 @@
 								</div>
 							</div>
 						</div>
-                        @can('add product')
+                        @can('add section')
                             <div class="modal" id="modaldemo1">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content tx-size-sm">
                                         <div class="modal-body tx-center  pd-y-20 pd-x-20">
                                             <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
-                                            <h1 class="tx-center">{{ __('products.add product') }}</h1>
-                                            <form action={{route('products.store')}} method="post">
+                                            <h1 class="tx-center">{{ __('permissions.add section') }}</h1>
+                                            <form class="form-horizontal" action={{route('permissions.store')}} method="post">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control @error('product_name') is-invalid @enderror" name="product_name" value="{{old('product_name')}}" placeholder={{ __('products.product name') }}>
-                                                    @error('product_name')
-                                                        <div class="alert alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <select name="section_id" class="form-control">
-                                                        <option >{{ __('products.choose section') }}</option>
-                                                        @foreach ($sections as $section)
-                                                            <option value="{{$section->id}}">{{$section->section_name}}</option>
-                                                        @endforeach
-                                                        @error('section_id')
+                                                        <input type="text" class="form-control @error('section_name') is-invalid @enderror" name="section_name" value="{{old('section_name')}}" placeholder={{ __('permissions.name') }}>
+                                                        @error('section_name')
                                                             <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
-                                                    </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control @error('description') is-invalid @enderror"  name="description" placeholder="{{ __('permissions.description') }}" value="{{old('description')}}">
+                                                        @error('description')
+                                                            <div class="alert alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
                                                 </div>
-                                                <div class="form-group mb-3 d-flex justify-content-around">
-                                                    <button type="submit" class="btn ripple btn-success pd-x-25">{{ __('products.add') }}</button>
-                                                    <button type="button" aria-label="Close" data-dismiss="modal" class="btn btn-danger">{{ __('products.cancel') }}</button>
+                                                <div class="form-group">
+                                                    <input type="hidden" name='created_by' value={{auth()->user()->id}}>
+                                                </div>
+                                                <div class="form-group mb-3 justify-content-around">
+                                                    <button type="submit" class="btn ripple btn-success pd-x-25">{{ __('permissions.add') }}</button>
+                                                    <button type="button" aria-label="Close" data-dismiss="modal" class="btn btn-danger">{{ __('permissions.cancel') }}</button>
                                                 </div>
                                             </form>
 
@@ -160,22 +148,4 @@
 <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
 <!-- Internal Modal js-->
 <script src="{{URL::asset('assets/js/modal.js')}}"></script>
-<!--Internal  Datepicker js -->
-<script src="{{URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js')}}"></script>
-<!--Internal  jquery.maskedinput js -->
-<script src="{{URL::asset('assets/plugins/jquery.maskedinput/jquery.maskedinput.js')}}"></script>
-<!--Internal  spectrum-colorpicker js -->
-<script src="{{URL::asset('assets/plugins/spectrum-colorpicker/spectrum.js')}}"></script>
-<!-- Internal Select2.min js -->
-<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
-<!--Internal Ion.rangeSlider.min js -->
-<script src="{{URL::asset('assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js')}}"></script>
-<!--Internal  jquery-simple-datetimepicker js -->
-<script src="{{URL::asset('assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js')}}"></script>
-<!-- Ionicons js -->
-<script src="{{URL::asset('assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js')}}"></script>
-<!--Internal  pickerjs js -->
-<script src="{{URL::asset('assets/plugins/pickerjs/picker.min.js')}}"></script>
-<!-- Internal form-elements js -->
-<script src="{{URL::asset('assets/js/form-elements.js')}}"></script>
 @endsection

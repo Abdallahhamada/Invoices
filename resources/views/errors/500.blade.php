@@ -1,4 +1,7 @@
 @extends('layouts.master2')
+@section('title')
+	{{__('errors.error')}} 500
+@endsection
 @section('css')
 <!--- Internal Fontawesome css-->
 <link href="{{URL::asset('assets/plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
@@ -15,8 +18,9 @@
 		<!-- Main-error-wrapper -->
 		<div class="main-error-wrapper  page page-h ">
 			<img src="{{URL::asset('assets/img/media/500.png')}}" class="error-page" alt="error">
-			<h2>Oopps. The page you were looking for doesn't exist.</h2>
-			<h6>You may have mistyped the address or the page may have moved.</h6><a class="btn btn-outline-danger" href="{{ url('/' . $page='index') }}">Back to Home</a>
+			<h2>{{__('error.oopps. the page you were looking for doesn\'t exist')}}</h2>
+			<h6>{{__('error.you may have mistyped the address or the page may have moved')}}</h6>
+            <a class="btn btn-outline-danger" href="{{ url('/' . $page='index') }}">{{__('error.back to home')}}</a>
 		</div>
 		<!-- /Main-error-wrapper -->
 @endsection

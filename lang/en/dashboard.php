@@ -36,6 +36,7 @@ return [
     /*  'U' */
     /*  'V' */
     /*  'W' */
+        'welcome back'=>'Welcome Back',
     /*  'X' */
     /*  'Y' */
     /*  'Z' */

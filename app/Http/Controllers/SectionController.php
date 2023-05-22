@@ -54,7 +54,7 @@ class SectionController extends Controller
     public function edit($id)
     {
         $data=Section::findOrFail($id);
-        return view('sections.edit',compact('data'));
+        return view('sections.edit-sections',compact('data'));
     }
 
     /**

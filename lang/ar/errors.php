@@ -12,10 +12,9 @@ return [
     */
     /*  'A' */
     /*  'B' */
-        'Back to Home'=>'العوده للرئيسية',
+        'back to home'=>'العوده للرئيسية',
     /*  'C' */
     /*  'D' */
-        'dashboard'=>'لوحة القيادة',
     /*  'E' */
         'error'=>'خطأ',
     /*  'F' */
@@ -28,6 +27,7 @@ return [
     /*  'M' */
     /*  'N' */
     /*  'O' */
+        'oopps. the page you were looking for doesn\'t exist'=>'أوووبس.  الصفحة التي تبحث عنها غير موجوده.',
     /*  'P' */
     /*  'Q' */
     /*  'R' */
@@ -36,9 +36,9 @@ return [
     /*  'U' */
     /*  'V' */
     /*  'W' */
-        'welcome back'=>'مرحبا بعودتك',
     /*  'X' */
     /*  'Y' */
+        'you may have mistyped the address or the page may have moved'=>'ربما تكون أخطأت في كتابة العنوان أو قد تم نقل الصفحه.',
     /*  'Z' */
 ];
 

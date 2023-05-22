@@ -29,11 +29,13 @@
 					<div class="col-xl-12">
 						<div class="card">
 							<div class="card-header pb-0">
-								<div class="row row-xs wd-xl-80p">
-                                    <div class="col-sm-6 col-md-3 mg-t-10 mg-sm-t-0">
-                                        <a class="btn btn-outline-success btn-block" href="{{route('invoices.create')}}"><i class="fa-solid fa-plus"></i>  {{ __('invoices.add invoice') }}</a>
+                                @can('add invoices')
+                                    <div class="row row-xs wd-xl-80p">
+                                        <div class="col-sm-6 col-md-3 mg-t-10 mg-sm-t-0">
+                                            <a class="btn btn-outline-success btn-block" href="{{route('invoices.create')}}"><i class="fa-solid fa-plus"></i>  {{ __('invoices.add invoice') }}</a>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -87,27 +89,24 @@
                                                                         <i class="fa fa-print"></i> {{ __('invoices.print') }}
                                                                     </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a href={{route('invoices.edit',$info->id)}} class="dropdown-item text-warning">
-                                                                        <i class="fa fa-pen-to-square"></i> {{ __('invoices.edit') }}
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <form action={{route('invoices.destroy',$info->id)}} method="post">
-                                                                        @csrf
-                                                                        <input type="hidden" name="_method" value="delete">
-                                                                        <button type="submit" class="dropdown-item text-danger"><i class="fa fa-trash"></i> {{ __('invoices.delete') }}</button>
-                                                                    </form>
-                                                                </li>
+                                                                @can('edit invoices')
+                                                                    <li>
+                                                                        <a href={{route('invoices.edit',$info->id)}} class="dropdown-item text-warning">
+                                                                            <i class="fa fa-pen-to-square"></i> {{ __('invoices.edit') }}
+                                                                        </a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('delete invoices')
+                                                                    <li>
+                                                                        <form action={{route('invoices.destroy',$info->id)}} method="post">
+                                                                            @csrf
+                                                                            <input type="hidden" name="_method" value="delete">
+                                                                            <button type="submit" class="dropdown-item text-danger"><i class="fa fa-trash"></i> {{ __('invoices.delete') }}</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
                                                             </ul>
                                                         </div>
-                                                        {{-- <a href={{route('invoices.show',$info->id)}} class="btn btn-outline-primary "><i class="fa-regular fa-eye"></i> {{ __('invoices.show') }}</a>
-                                                        <a href={{route('invoices.edit',$info->id)}} class="btn btn-outline-warning "><i class="fa-regular fa-pen-to-square"></i> {{ __('invoices.edit') }}</a>
-                                                        <form action={{route('invoices.destroy',$info->id)}} method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="_method" value="delete">
-                                                            <button type="submit" class="btn btn-outline-danger "><i class="fa-regular fa-trash"></i> {{ __('invoices.delete') }}</button>
-                                                        </form> --}}
                                                     </td>
                                                 </tr>
                                             @endforeach

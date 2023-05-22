@@ -12,12 +12,11 @@ return [
     */
     /*  'A' */
     /*  'B' */
-        'Back to Home'=>'العوده للرئيسية',
+        'back to home'=>'Back To Home',
     /*  'C' */
     /*  'D' */
-        'dashboard'=>'لوحة القيادة',
     /*  'E' */
-        'error'=>'خطأ',
+        'error'=>'Error',
     /*  'F' */
     /*  'G' */
     /*  'H' */
@@ -28,6 +27,7 @@ return [
     /*  'M' */
     /*  'N' */
     /*  'O' */
+        'oopps. the page you were looking for doesn\'t exist'=>'Oopps. The page you were looking for doesn\'t exist.',
     /*  'P' */
     /*  'Q' */
     /*  'R' */
@@ -36,9 +36,9 @@ return [
     /*  'U' */
     /*  'V' */
     /*  'W' */
-        'welcome back'=>'مرحبا بعودتك',
     /*  'X' */
     /*  'Y' */
+        'you may have mistyped the address or the page may have moved'=>'You may have mistyped the address or the page may have moved.',
     /*  'Z' */
 ];
 
